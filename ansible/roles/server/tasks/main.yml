@@ -1,0 +1,22 @@
+---
+- name: Perform Safe Upgrade
+  apt: upgrade=safe update_cache=yes
+
+- name: Install Server Basics
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+    - acl
+    - ack-grep
+    - build-essenti
+    - curl
+    - git
+    - htop
+    - ntp
+    - python-pip
+    - silversearcher-ag
+    - tmux
+    - unzip
+    - vim
+    - wget
+  notify:
+    - Start NTP

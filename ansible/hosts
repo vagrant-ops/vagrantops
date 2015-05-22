@@ -1,0 +1,4 @@
+[vagrantops]
+127.0.0.1
+
+[vagrantops:vars]

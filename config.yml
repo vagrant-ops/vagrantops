@@ -1,0 +1,9 @@
+---
+- hosts: all
+  user: vagrant
+  sudo: yes
+  roles:
+    - server
+    - ssl
+    - nginx
+    - php

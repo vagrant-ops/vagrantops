@@ -1,0 +1,36 @@
+---
+- name: Add Nginx Repository
+  apt_repository: repo='ppa:nginx/stable' state=present
+
+- name: Install Nginx
+  apt: pkg=nginx state=installed update_cache=true
+  notify:
+    - Start Nginx
+
+- name: Add H5BP Config
+  copy: src=h5bp dest=/etc/nginx owner=root group=root
+
+- name: Add Nginx Config
+  copy: src=nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root
+
+- name: Add Nginx Mime Types
+  copy: src=mime.types dest=/etc/nginx/mime.types owner=root group=root
+
+- name: Disable Default Site
+  file: dest=/etc/nginx/sites-enabled/default state=absent
+
+- name: Add Vagrantops Config
+  template: src=vagrantops.conf.j2 dest=/etc/nginx/sites-available/{{ dev_domain }}.conf owner=root group=root
+  notify:
+    - Reload Nginx
+
+- name: Enable Vagrantops Config
+  file: src=/etc/nginx/sites-available/{{ dev_domain }}.conf dest=/etc/nginx/sites-enabled/{{ dev_domain }}.conf state=link
+  notify:
+    - Reload Nginx
+
+- name: Create Web Root
+  file: dest=/var/www/{{ dev_domain }}/public mode=0700 state=directory owner=www-data group=www-data
+
+- name: Add Index.php
+  file: src=index.php dest=/var/www/{{ dev_domain }}/public/index.php owner=www-data group=www-data

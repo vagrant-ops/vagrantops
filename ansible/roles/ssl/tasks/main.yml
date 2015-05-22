@@ -1,0 +1,6 @@
+---
+- name: Create SSL Directry
+  file: dest=/etc/ssl/vagrantops mode=0700 state=directory owner=root group=root
+
+- name: Create Self-Signed Certificate
+  command: openssl req -new -nodes -x509 -subj "/C=US/ST=Texas/L=San Antonio/O=IT/CN={{ dev_domain }}" -days 3650 -keyout /etc/ssl/vagrantops/{{ dev_domain }}.key -out /etc/ssl/vagrantops/{{ dev_domain }}.crt

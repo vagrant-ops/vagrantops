@@ -1,0 +1,49 @@
+#server {
+#    # Enforce the use of HTTPS
+#    listen 80 default_server;
+#    server_name *.vagrantops.dev;
+#    return 301 https://$host$request_uri;
+#}
+
+server {
+    listen 80 default_server;
+    listen 443 default_server ssl;
+
+    root /var/www/{{ dev_domain }}/public;
+
+    index index.html index.htm index.php;
+
+    access_log /var/log/nginx/vagrantops.log;
+    error_log  /var/log/nginx/vagrantops-error.log error;
+
+    server_name vagrantops.dev *.vagrantops.dev;
+
+    charset utf-8;
+
+    include h5bp/basic.conf;
+
+    ssl_certificate           /etc/ssl/vagrantops/{{ dev_domain }}.crt;
+    ssl_certificate_key       /etc/ssl/vagrantops/{{ dev_domain }}.key;
+    include h5bp/directive-only/ssl.conf;
+
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location = /favicon.ico { log_not_found off; access_log off; }
+    location = /robots.txt  { log_not_found off; access_log off; }
+
+    location ~ \.php$ {
+       include snippets/fastcgi-php.conf;
+       fastcgi_pass unix:/var/run/php5-fpm.sock;
+    }
+
+    location ~ ^/(fpmstatus|fpmping)$ {
+        access_log off;
+        allow 127.0.0.1;
+        deny all;
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+    }
+}
