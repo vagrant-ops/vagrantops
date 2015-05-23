@@ -7,7 +7,7 @@
   with_items:
     - acl
     - ack-grep
-    - build-essenti
+    - build-essential
     - curl
     - git
     - htop
