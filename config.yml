@@ -5,5 +5,9 @@
   roles:
     - server
     - ssl
-    - nginx
+    - redis
+    - memcached
+    - mysql
+    - postgresql
     - php
+    - nginx
