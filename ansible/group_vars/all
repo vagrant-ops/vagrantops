@@ -1,2 +1,8 @@
 ---
+# General
 dev_domain: vagrantops.dev
+
+# Database
+db_root_pass: root
+databases:
+  - vagrantops
