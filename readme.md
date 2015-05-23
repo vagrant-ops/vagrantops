@@ -4,13 +4,16 @@ An Ansible-powered provisioning system for local development.
 
 ## Ansible Roles to Start With
 
+* Memcached
+* MySQL
 * Nginx
-* MySQL (MariaDB?)
-* PostgreSQL
-* Redis
 * PHP (FPM)
-* Python Dev Tools (pip, virtualenv)
+* PostgreSQL
 * Ruby Dev Tools (Rails? rbenv or "best"?)
+* Python Dev Tools (pip, virtualenv)
+* Redis
+* Server Basics
+* SSL
 
 ## File-based config
 
