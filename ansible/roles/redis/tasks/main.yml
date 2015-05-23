@@ -1,0 +1,10 @@
+---
+- name: Add Redis Repository
+  apt_repository: repo='ppa:rwky/redis' state=present
+
+- name: Install Redis
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+   - redis-server
+  notify:
+   - Start Redis

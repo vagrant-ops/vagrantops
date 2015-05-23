@@ -1,0 +1,7 @@
+---
+- name: Install Memcached
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+   - memcached
+  notify:
+   - Start Memcached
