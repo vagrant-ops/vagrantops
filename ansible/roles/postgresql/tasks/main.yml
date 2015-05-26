@@ -12,3 +12,5 @@
    - postgresql-contrib-9.4
   notify:
     - Start PostgreSQL
+
+# Add files here: /etc/postgresql/9.4/main
