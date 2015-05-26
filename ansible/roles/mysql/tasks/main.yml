@@ -12,19 +12,16 @@
   notify:
    - Restart MySQL
 
+- name: Copy .my.cnf File with root Password
+  template: src=.my.cnf.j2 dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant mode=0600
+
 - name: Update MySQL Root Password for All root Accounts
   mysql_user: name=root host={{ item }} password={{ db_root_pass }}
   with_items:
    - 127.0.0.1
    - ::1
    - localhost
-   - %
-
-- name: Copy .my.cnf File with root Password
-  template: src=.my.cnf.j2 dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant mode=0600
-
-- name: Copy .my.cnf File with root Password
-  template: src=.my.cnf.j2 dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant mode=0600
+   - "%"
 
 - name: Remove Anonymous Users
   mysql_user: name='' host={{ item }} state=absent
