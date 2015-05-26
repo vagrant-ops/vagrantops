@@ -30,8 +30,10 @@
     - Reload Nginx
 
 - name: Create Web Root
-  file: dest=/var/www/{{ dev_domain }}/public mode=0700 state=directory owner=www-data group=www-data
+  file: dest=/var/www/{{ dev_domain }}/public mode='u=rwx,go=rx' state=directory owner=www-data group=www-data
 
 - name: Add Index.php
-  file: src=index.php dest=/var/www/{{ dev_domain }}/public/index.php owner=www-data group=www-data
-  sudo_user: www-data
+  copy: src=index.php dest=/var/www/{{ dev_domain }}/public/index.php owner=www-data group=www-data
+
+- name: Force Nginx Reload
+  service: name=nginx state=reloaded
