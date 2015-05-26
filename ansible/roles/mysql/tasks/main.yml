@@ -21,17 +21,20 @@
    - 127.0.0.1
    - ::1
    - localhost
-   - "%"
+  sudo_user: vagrant
 
 - name: Remove Anonymous Users
   mysql_user: name='' host={{ item }} state=absent
   with_items:
    - localhost
+  sudo_user: vagrant
 
 - name: Remove Test Database
   mysql_db: name=test state=absent
+  sudo_user: vagrant
 
 - name: Create Databases
-  mysql_db: name={{ item.name }} state=present
+  mysql_db: name={{ item }} state=present
   with_items: databases
   when: databases|lower() != 'none'
+  sudo_user: vagrant

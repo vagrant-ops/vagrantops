@@ -34,3 +34,4 @@
 
 - name: Add Index.php
   file: src=index.php dest=/var/www/{{ dev_domain }}/public/index.php owner=www-data group=www-data
+  sudo_user: www-data
