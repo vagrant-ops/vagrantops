@@ -24,6 +24,11 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
+
+    # Set the timesync threshold to 10 seconds, instead of the default 20 minutes.
+    # If the clock gets more than 15 minutes out of sync (due to your laptop going
+    # to sleep for instance, then some 3rd party services will reject requests.
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
   end
 
   # Use NFS for the shared folder (??)
@@ -32,17 +37,13 @@ Vagrant.configure(2) do |config|
             :nfs => true,
             :mount_options => ['nolock,vers=3,udp,noatime']
 
-  # Set the timesync threshold to 10 seconds, instead of the default 20 minutes.
-  # If the clock gets more than 15 minutes out of sync (due to your laptop going
-  # to sleep for instance, then some 3rd party services will reject requests.
-  vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
-
   # Add Ansible and Configuration Files
-  config.vm.provision "file", source: "./ansible", destination: "/home/vagrant/ops"
+  config.vm.provision "file", source: "./ansible",    destination: "/home/vagrant/ops"
   config.vm.provision "file", source: "./config.yml", destination: "/home/vagrant/ops/ansible/config.yml"
 
   # Run Ansible
   config.vm.provision "shell" do |s|
     s.path = "./provision.sh"
+    s.privileged = false
   end
 end
