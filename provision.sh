@@ -5,5 +5,5 @@ cd /home/vagrant/ops/ansible
 
 # Provision with Ansible
 ansible-playbook -s \
-                 -i ./hosts
+                 -i ./hosts \
                  ./config.yml
