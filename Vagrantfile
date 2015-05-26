@@ -18,7 +18,7 @@ Vagrant.configure(2) do |config|
 
   # Configure A Few VirtualBox Settings
   config.vm.provider "virtualbox" do |vb|
-    vb.name = 'homestead'
+    vb.name = 'vagrantops'
     vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--cpus", "1"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
             :mount_options => ['nolock,vers=3,udp,noatime']
 
   # Add Ansible and Configuration Files
-  config.vm.provision "file", source: "./ansible",    destination: "/home/vagrant/ops"
+  config.vm.provision "file", source: "./ansible",    destination: "/home/vagrant/ops/ansible"
   config.vm.provision "file", source: "./config.yml", destination: "/home/vagrant/ops/ansible/config.yml"
 
   # Run Ansible
