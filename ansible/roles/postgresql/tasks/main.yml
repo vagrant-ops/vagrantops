@@ -1,2 +1,14 @@
 ---
-# tasks file for postgresql
+- name: Add PostgreSQL Key
+  apt_key: url='https://www.postgresql.org/media/keys/ACCC4CF8.asc' state=present
+
+- name: Add PostgreSQL Repository
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' state=present
+
+- name: Install PostgreSQL
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+   - postgresql-9.4
+   - postgresql-contrib-9.4
+  notify:
+    - Start PostgreSQL
