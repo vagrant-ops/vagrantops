@@ -12,17 +12,7 @@
   notify:
    - Restart MySQL
 
-- name: Copy .my.cnf File with root Password
-  template: src=.my.cnf.j2 dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant mode=0600
-
-- name: Update MySQL Root Password for All root Accounts
-  mysql_user: name=root host={{ item }} password={{ db_root_pass }}
-  with_items:
-   - 127.0.0.1
-   - ::1
-   - localhost
-  sudo_user: vagrant
-
+# Run the following as user vagrant
 - name: Remove Anonymous Users
   mysql_user: name='' host={{ item }} state=absent
   with_items:
@@ -38,3 +28,19 @@
   with_items: databases
   when: databases|lower() != 'none'
   sudo_user: vagrant
+
+- name: Update MySQL Root Password for All root Accounts
+  mysql_user: name=root host={{ item }} password={{ db_root_pass }}
+  with_items:
+   - 127.0.0.1
+   - ::1
+   - localhost
+  sudo_user: vagrant
+
+# Set user vagrant's ability to login without
+# specifying user or password. The above setting of
+# password for root user is mandatory for this to work
+#
+# This must be *last* in order to make this an idempotent action
+- name: Copy .my.cnf File with root Password
+  template: src=.my.cnf.j2 dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant mode=0600
