@@ -11,9 +11,35 @@ This project provides the ability to provision your Vagrant virtual machines wit
 * Host one or multiple projects on each Vagrant virtual machine
 * Learn some Ansible (if you want)
 
-## Quick Start
+## Quickstart
 
-Let's see how things shake out first.
+A [slightly more extended quickstart](http://localhost:8000/quickstart/) is found here.
+
+**One:** Clone the Repository:
+
+```bash
+git clone git@github.com:vagrant-ops/vagrantops.git
+```
+
+**Two:** Set any variables in `ansible/group_vars/all`:
+
+```yaml
+---
+# General
+dev_domain: nonsense.dev
+
+# Database
+db_root_pass: root_user_password
+databases:
+  - my_app_db_1
+  - my_app_db_2
+```
+
+**Three:** Start the server:
+
+```bash
+vagrant up
+```
 
 <!--
 
