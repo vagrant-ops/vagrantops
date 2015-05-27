@@ -13,7 +13,7 @@ This project provides the ability to provision your Vagrant virtual machines wit
 
 ## Quickstart
 
-A [slightly more extended quickstart](http://localhost:8000/quickstart/) is found here.
+A [slightly more extended quickstart](/quickstart/) is found here.
 
 **One:** Clone the Repository:
 
