@@ -33,6 +33,11 @@
 - name: Composer Self Update
   shell: composer self-update
 
+# Temporary fix for Ansible bug #1170
+# https://github.com/ansible/ansible-modules-core/issues/1170
+- name: Remove php-fpm init.d
+  file: path=/etc/init.d/php5-fpm state=absent
+
 - name: Add PHP-FPM PHP Configuration
   template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini owner=root group=root
   notify:
